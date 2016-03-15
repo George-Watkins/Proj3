@@ -42,9 +42,10 @@ public class proj3 extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_settings:
-                return true;
+                startActivity(new Intent(this, settings.class));
             default:
                 return super.onOptionsItemSelected(item);
+
         }
     }
 
