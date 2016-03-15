@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Project3</string>
     <string name="action_settings">Settings</string>
+    <string-array name="numbers">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+    </string-array>
 </resources>
