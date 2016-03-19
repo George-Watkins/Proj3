@@ -14,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class proj3 extends AppCompatActivity {
 
     Spinner spinner;
@@ -24,6 +27,19 @@ public class proj3 extends AppCompatActivity {
         setContentView(R.layout.activity_proj3);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        addItemsOnSpinner();
+    }
+
+    private void addItemsOnSpinner() {
+        spinner = (Spinner) findViewById(R.id.spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("One 1");
+        list.add("Two 2");
+        list.add("Three 3");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
     }
 
     @Override
