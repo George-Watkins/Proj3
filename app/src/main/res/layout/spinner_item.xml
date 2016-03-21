@@ -3,14 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dip"
-        android:gravity="left"
-        android:textColor="@color/textColorWhite"
-        android:background="@color/colorPrimaryBlack"
-        android:padding="5dip"
-        />
+    <resources>
+        <string-array name="JSON_URL_NAME">
+            <item>CNU - Defender</item>
+            <item>Pair - Tenton Software - Pets</item>
+
+        </string-array>
+        <string-array name="JSON_URL">
+            <item>http://www.pcs.cnu.edu/~kperkins/pets/</item>
+            <item>http://www.tentonsoftware.com/pets/</item>
+
+        </string-array>
+    </resources>
 
 </LinearLayout>

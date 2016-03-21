@@ -1,8 +1,10 @@
 package git.comgeorge_watkinsasg3.httpsgithub.project3;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -25,16 +27,32 @@ public class proj3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proj3);
+        myPreference= PreferenceManager.getDefaultSharedPreferences(this);
+
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener(){
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                if (key.equals("listPref")){
+                    loadImage();
+                }
+            }
+        };
+
+        myPreference.registerOnSharedPreferenceChangeListener(listener);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         addItemsOnSpinner();
     }
 
+    private void loadImage() {
+    }
+
     private void addItemsOnSpinner() {
         spinner = (Spinner) findViewById(R.id.spinner);
-        List<String> list = new ArrayList<String>();
-        list.add("One 1");
+        ArrayList<pet> list = new ArrayList<pet>();
+        list.add(JSON);
         list.add("Two 2");
         list.add("Three 3");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
@@ -65,26 +83,26 @@ public class proj3 extends AppCompatActivity {
         }
     }
 
-    private void setupSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers, R.layout.spinner_item);
-        spinner = (Spinner)findViewById(R.id.spinner);
-        spinner.setAdapter(adapter);
-
-        //respond when spinner clicked
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            public static final int SELECTED_ITEM = 0;
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long rowid){
-                if(arg0.getChildAt(SELECTED_ITEM) != null){
-                    ((TextView) arg0.getChildAt(SELECTED_ITEM)).setTextColor(Color.WHITE);
-                    Toast.makeText(proj3.this, (String) arg0.getItemAtPosition(pos), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
-    }
+//    private void setupSpinner() {
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers, R.layout.spinner_item);
+//        spinner = (Spinner)findViewById(R.id.spinner);
+//        spinner.setAdapter(adapter);
+//
+//        //respond when spinner clicked
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+//            public static final int SELECTED_ITEM = 0;
+//
+//            @Override
+//            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long rowid){
+//                if(arg0.getChildAt(SELECTED_ITEM) != null){
+//                    ((TextView) arg0.getChildAt(SELECTED_ITEM)).setTextColor(Color.WHITE);
+//                    Toast.makeText(proj3.this, (String) arg0.getItemAtPosition(pos), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//            }
+//        });
+//    }
 }
