@@ -9,43 +9,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText"
         android:layout_gravity="center_horizontal"
-        android:onClick="chooseServer"
+        android:clickable="true"
         android:text="Info"
         android:textSize="35sp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:text="Select which site to get JSON data from"/>
-
-    <View android:id="@+id/separator"
-        android:background="#ffffff"
-        android:layout_width = "fill_parent"
-        android:layout_height="1dip"
-        android:layout_centerVertical ="true"
-        android:layout_alignParentTop="true"/>
-
-
-    <RadioGroup
-        android:id="@+id/radioServer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/radio_cnuServer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:text="@string/server1"/>
-
-        <RadioButton
-            android:id="@+id/radio_tentonServer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/radio_cnuServer"
-            android:textSize="30sp"
-            android:text="@string/server2"/>
-
-
-    </RadioGroup>
 
 </LinearLayout>
