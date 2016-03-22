@@ -9,5 +9,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText"
         android:layout_gravity="center_horizontal"
-        android:text="Settings should bring you here" />
+        android:text="Info: Select which site to get JSON data from"/>
 </LinearLayout>

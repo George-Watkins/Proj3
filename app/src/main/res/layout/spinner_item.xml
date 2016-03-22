@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
 
     <resources>
-        <string-array name="JSON_URL_NAME">
+        <string-array android:name="JSON_URL_NAME">
             <item>CNU - Defender</item>
             <item>Pair - Tenton Software - Pets</item>
 
         </string-array>
-        <string-array name="JSON_URL">
+        <string-array android:name="JSON_URL">
             <item>http://www.pcs.cnu.edu/~kperkins/pets/</item>
             <item>http://www.tentonsoftware.com/pets/</item>
 

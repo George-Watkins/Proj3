@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,29 +17,42 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class proj3 extends AppCompatActivity {
 
     Spinner spinner;
+    private static final String TAG = "ParseJSON";
+    private static final String MYURL = "http://www.tetonsoftware.com/pets/pets.json";
+
+    public static final int MAX_LINES = 15;
+    private static final int SPACES_TO_INDENT_FOR_EACH_LEVEL_OF_NESTING = 2;
+
+    JSONArray jsonArray;
+    int numberEntries = -1;
+    int currentEntry = -1;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proj3);
-        myPreference= PreferenceManager.getDefaultSharedPreferences(this);
 
-        listener = new SharedPreferences.OnSharedPreferenceChangeListener(){
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                if (key.equals("listPref")){
-                    loadImage();
-                }
-            }
-        };
+        ConnectivityCheck myCheck = new ConnectivityCheck(this);
+        if(myCheck.isNetworkReachableAlertUserIfNot()){
+            DownloadTask myTask = new DownloadTask(this);
+            myTask.setnameValuePair("name 1", "value 1");
+            myTask.setnameValuePair("name 2", "value 2");
+            myTask.setnameValuePair("name 3", "value 3");
 
-        myPreference.registerOnSharedPreferenceChangeListener(listener);
-
+            myTask.execute(MYURL);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,13 +60,34 @@ public class proj3 extends AppCompatActivity {
         addItemsOnSpinner();
     }
 
-    private void loadImage() {
-    }
-
     private void addItemsOnSpinner() {
         spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayList<pet> list = new ArrayList<pet>();
-        list.add(JSON);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = "nothing";
+
+                if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("one 1"))
+                    item = parent.getItemAtPosition(position).toString();
+                else if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("two 2"))
+                    item = parent.getItemAtPosition(position).toString();
+                else if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("three 3"))
+                    item = parent.getItemAtPosition(position).toString();
+                else {
+                    //do other things
+                }
+
+                Toast.makeText(parent.getContext(), item, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("one 1");
         list.add("Two 2");
         list.add("Three 3");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
@@ -83,26 +118,32 @@ public class proj3 extends AppCompatActivity {
         }
     }
 
-//    private void setupSpinner() {
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers, R.layout.spinner_item);
-//        spinner = (Spinner)findViewById(R.id.spinner);
-//        spinner.setAdapter(adapter);
-//
-//        //respond when spinner clicked
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-//            public static final int SELECTED_ITEM = 0;
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long rowid){
-//                if(arg0.getChildAt(SELECTED_ITEM) != null){
-//                    ((TextView) arg0.getChildAt(SELECTED_ITEM)).setTextColor(Color.WHITE);
-//                    Toast.makeText(proj3.this, (String) arg0.getItemAtPosition(pos), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> arg0) {
-//            }
-//        });
-//    }
+    public void processJSON(String string){
+        try{
+            JSONObject jsonobject = new JSONObject(string);
+            jsonArray = jsonobject.getJSONArray("pets");
+
+            numberEntries = jsonArray.length();
+
+            currentEntry = 0;
+            setJSONUI(currentEntry);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void setJSONUI(int i){
+        if (jsonArray == null){
+            return;
+        }
+
+        try{
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
 }
