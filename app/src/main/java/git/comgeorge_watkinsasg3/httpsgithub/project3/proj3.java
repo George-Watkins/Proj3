@@ -28,7 +28,7 @@ public class proj3 extends AppCompatActivity {
 
     Spinner spinner;
     private static final String TAG = "ParseJSON";
-    private static final String MYURL = "http://www.tetonsoftware.com/pets/pets.json";
+    private static final String MYURL  = "http://www.tetonsoftware.com/pets/pets.json";
 
     public static final int MAX_LINES = 15;
     private static final int SPACES_TO_INDENT_FOR_EACH_LEVEL_OF_NESTING = 2;
@@ -73,9 +73,6 @@ public class proj3 extends AppCompatActivity {
                     item = parent.getItemAtPosition(position).toString();
                 else if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("three 3"))
                     item = parent.getItemAtPosition(position).toString();
-                else {
-                    //do other things
-                }
 
                 Toast.makeText(parent.getContext(), item, Toast.LENGTH_LONG).show();
             }
