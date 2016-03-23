@@ -4,9 +4,13 @@
     <string name="server1">CNU - Defender</string>
     <string name="server2">Pair - Tenton Software - Pets</string>
     <string name="askWhatServer">Info</string>
-    <string-array name="numbers">
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
+    <string-array name="JSON_URL_NAME">
+        <item>CNU - Defender</item>
+        <item>Pair - Tenton Software - Pets</item>
+    </string-array>
+
+    <string-array name="JSON_URL">
+        <item>http://www.pcs.cnu.edu/~kperkins/pets/</item>
+        <item>http://www.tentonsoftware.com/pets/</item>
     </string-array>
 </resources>

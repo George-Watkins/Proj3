@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -19,8 +20,6 @@ import java.util.ArrayList;
 
 public class settings extends Activity {
 
-    private RadioGroup radioServerGroup;
-    private RadioButton radioServerButton;
     AlertDialog levelDialog;
 
     @Override
@@ -38,8 +37,7 @@ public class settings extends Activity {
     }
 
     private void chooseServer() {
-
-        final CharSequence[] items = {"CNU - Defender","Pair - Tenton Software - Pets"};
+        final CharSequence[] items = {"CNU - Defender", "Pair - Tenton Software - Pets"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Info");
@@ -48,32 +46,21 @@ public class settings extends Activity {
             public void onClick(DialogInterface dialog, int item){
                 switch (item){
                     case 0:
-                        //code when CNU Defender is selected
-                        //Change the url code in proj3.class
+                        //code when cnu defender is selected, CHANGE THE URL IN PROJ3.CLASS
+                        Toast.makeText(settings.this, "Cnu server selected", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        //code when Pair - Tenton is selected
-                        //change the url code in proj3.code
+                        //code when Pair - Tenton is selected, CHANGE THE URL IN PROJ3.CLASS
+                        Toast.makeText(settings.this, "Tenton software selected", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 levelDialog.dismiss();
             }
         });
+        builder.setNegativeButton("Cancel", null);
         levelDialog = builder.create();
         levelDialog.show();
     }
 
-    //need to add a dialog box somewhere in here
-//
-//    private void addListener() {
-//        radioServerGroup = (RadioGroup) findViewById(R.id.radioServer);
-//
-//        radioServerGroup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int selectedId = radioServerGroup.getCheckedRadioButtonId();
-//                Toast.makeText(settings.this, radioServerButton.getText(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+
 }

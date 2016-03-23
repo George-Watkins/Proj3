@@ -5,7 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/activity_proj3"
     tools:context="git.comgeorge_watkinsasg3.httpsgithub.project3.proj3">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/backgroundImage"
+        android:scaleType="fitXY"/>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +23,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:foreground="@color/transparent"
+            android:background="@color/transparent"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <Spinner

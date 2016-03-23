@@ -2,7 +2,12 @@ package git.comgeorge_watkinsasg3.httpsgithub.project3;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,23 +25,34 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 public class proj3 extends AppCompatActivity {
 
     Spinner spinner;
+
     private static final String TAG = "ParseJSON";
-    private static final String MYURL  = "http://www.tetonsoftware.com/pets/pets.json";
+    private static final String MYURL = "http://www.tetonsoftware.com/pets/pets.json";
+    private static final String MYURL2 = "http://www.pcse.defen";
 
     public static final int MAX_LINES = 15;
     private static final int SPACES_TO_INDENT_FOR_EACH_LEVEL_OF_NESTING = 2;
 
+    JSONObject jsonObject;
     JSONArray jsonArray;
+    ArrayList<String> petList = new ArrayList<String>();
+
     int numberEntries = -1;
     int currentEntry = -1;
-
+    SharedPreferences myPreference;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
 
     @Override
@@ -44,8 +60,19 @@ public class proj3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proj3);
 
+        myPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                if (key.equals("listPref")) {
+                    loadImage();
+                }
+            }
+        };
+        myPreference.registerOnSharedPreferenceChangeListener(listener);
+
         ConnectivityCheck myCheck = new ConnectivityCheck(this);
-        if(myCheck.isNetworkReachableAlertUserIfNot()){
+        if (myCheck.isNetworkReachableAlertUserIfNot()) {
             DownloadTask myTask = new DownloadTask(this);
             myTask.setnameValuePair("name 1", "value 1");
             myTask.setnameValuePair("name 2", "value 2");
@@ -60,21 +87,53 @@ public class proj3 extends AppCompatActivity {
         addItemsOnSpinner();
     }
 
+    private void loadImage() {
+
+        try{
+            //CONVERT THE URL TO A BITMAP TO A DRAWABLE
+
+            URL firstImage = new URL(MYURL + FILE_NAME);
+            URLConnection conn = firstImage.openConnection();
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+            Bitmap bm = BitmapFactory.decodeStream(bis);
+            bis.close();
+            is.close();
+
+            Drawable d = new BitmapDrawable(bm);
+
+            TextView background = (TextView) findViewById(R.id.backgroundImage);
+            background.setBackground(d);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+        for(int i = 0; i < jsonArray.length(); i++){
+            getJSONFile(i);
+        }
+    }
+
+
     private void addItemsOnSpinner() {
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = "nothing";
 
-                if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("one 1"))
-                    item = parent.getItemAtPosition(position).toString();
-                else if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("two 2"))
-                    item = parent.getItemAtPosition(position).toString();
-                else if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("three 3"))
-                    item = parent.getItemAtPosition(position).toString();
 
-                Toast.makeText(parent.getContext(), item, Toast.LENGTH_LONG).show();
+//                String item = "nothing";
+//
+//                if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("Winston"))
+//                    item = parent.getItemAtPosition(position).toString();
+//                else if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("Higgens"))
+//                    item = parent.getItemAtPosition(position).toString();
+//                else if (parent.getItemAtPosition(position).toString().equalsIgnoreCase("Broccoli"))
+//                    item = parent.getItemAtPosition(position).toString();
+//
+//                Toast.makeText(parent.getContext(), item, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -83,11 +142,7 @@ public class proj3 extends AppCompatActivity {
             }
         });
 
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("one 1");
-        list.add("Two 2");
-        list.add("Three 3");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, petList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
     }
@@ -115,31 +170,48 @@ public class proj3 extends AppCompatActivity {
         }
     }
 
-    public void processJSON(String string){
-        try{
+    public void processJSON(String string) {
+        try {
             JSONObject jsonobject = new JSONObject(string);
             jsonArray = jsonobject.getJSONArray("pets");
 
             numberEntries = jsonArray.length();
 
             currentEntry = 0;
-            setJSONUI(currentEntry);
-        }
-        catch (Exception e){
+
+            while(currentEntry < numberEntries){
+                setJSONUI(currentEntry);
+                currentEntry++;
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void setJSONUI(int i){
-        if (jsonArray == null){
+    private void setJSONUI(int i) {
+        if (jsonArray == null) {
+            return;
+        }
+
+        try {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            petList.add(jsonObject.getString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getJSONFile(int i){
+        if(jsonArray == null){
             return;
         }
 
         try{
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-
+            petList.add(jsonObject.getString("file"));
         }
-        catch (JSONException e){
+        catch(JSONException e){
             e.printStackTrace();
         }
     }
