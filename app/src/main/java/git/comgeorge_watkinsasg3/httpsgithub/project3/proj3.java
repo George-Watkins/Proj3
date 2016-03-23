@@ -91,6 +91,7 @@ public class proj3 extends AppCompatActivity {
 
         try{
             //CONVERT THE URL TO A BITMAP TO A DRAWABLE
+            //so it can be made the background of textView backgroundImage
 
             URL firstImage = new URL(MYURL + FILE_NAME);
             URLConnection conn = firstImage.openConnection();
