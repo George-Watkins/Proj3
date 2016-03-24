@@ -46,10 +46,12 @@ public class settings extends Activity {
             public void onClick(DialogInterface dialog, int item){
                 switch (item){
                     case 0:
+                        proj3.setURL("http://www.pcs.cnu.edu/~kperkins/pets/");
                         //code when cnu defender is selected, CHANGE THE URL IN PROJ3.CLASS
                         Toast.makeText(settings.this, "Cnu server selected", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
+                        proj3.setURL("http://www.tetonsoftware.com/pets/pets.json");
                         //code when Pair - Tenton is selected, CHANGE THE URL IN PROJ3.CLASS
                         Toast.makeText(settings.this, "Tenton software selected", Toast.LENGTH_SHORT).show();
                         break;

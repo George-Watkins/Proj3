@@ -39,8 +39,7 @@ public class proj3 extends AppCompatActivity {
     Spinner spinner;
 
     private static final String TAG = "ParseJSON";
-    private static final String MYURL = "http://www.tetonsoftware.com/pets/pets.json";
-    private static final String MYURL2 = "http://www.pcse.defen";
+    private static String MYURL = "http://www.tetonsoftware.com/pets/pets.json";
 
     public static final int MAX_LINES = 15;
     private static final int SPACES_TO_INDENT_FOR_EACH_LEVEL_OF_NESTING = 2;
@@ -92,6 +91,10 @@ public class proj3 extends AppCompatActivity {
         try{
             //CONVERT THE URL TO A BITMAP TO A DRAWABLE
             //so it can be made the background of textView backgroundImage
+            //would this be just a call to DownloadImageTask?
+
+            //need to find some way of getting the file name from the server
+            //and then concatinating it with the current URL
 
             URL firstImage = new URL(MYURL + FILE_NAME);
             URLConnection conn = firstImage.openConnection();
@@ -215,5 +218,9 @@ public class proj3 extends AppCompatActivity {
         catch(JSONException e){
             e.printStackTrace();
         }
+    }
+
+    public static void setURL(String url){
+        MYURL = url;
     }
 }
