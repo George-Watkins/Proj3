@@ -89,6 +89,7 @@ public class proj3 extends AppCompatActivity {
     private void loadImage() {
 
         try{
+
             //CONVERT THE URL TO A BITMAP TO A DRAWABLE
             //so it can be made the background of textView backgroundImage
             //would this be just a call to DownloadImageTask?
