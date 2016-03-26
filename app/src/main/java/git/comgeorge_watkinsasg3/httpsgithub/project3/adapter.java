@@ -4,17 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import git.comgeorge_watkinsasg3.httpsgithub.project3.DownloadImageTask;
-import git.comgeorge_watkinsasg3.httpsgithub.project3.R;
-import git.comgeorge_watkinsasg3.httpsgithub.project3.proj3;
+import org.w3c.dom.Text;
 
-/**
- * Created by Perkins on 10/28/2015.
- */
 public class adapter extends BaseAdapter {
 
     //for layouts
@@ -33,12 +29,10 @@ public class adapter extends BaseAdapter {
     private void generateData() {
 //        values = new String[]{"http://cnu.edu/pcs/pcsebloglogo.png"
 //        };
-        values = new String[]{"http://cnu.edu/pcs/pcsebloglogo.png",
-                "http://cnu.edu/images/footer/facebook.png",
-                "http://cnu.edu/images/footer/wordpress.png",
-                "http://cnu.edu/images/footer/twitter.png",
-                "http://cnu.edu/images/footer/youtube.png",
-                "http://cnu.edu/images/footer/instagram.png"
+        values = new String[]{"http://www.tetonsoftware.com/pets/p0.png",
+                "http://www.tetonsoftware.com/pets/p1.png",
+                "http://www.tetonsoftware.com/pets/p2.png",
+                "http://www.pcs.cnu.edu/~kperkins/pets/"
         };
     }
 
@@ -72,19 +66,20 @@ public class adapter extends BaseAdapter {
             convertView = myInflater.inflate(R.layout.activity_proj3, null);
 
             holder = new ViewHolder();
-            holder.img1 = (ImageView) convertView.findViewById(R.id.backgroundImage);
-            holder.tv1 = (TextView) convertView.findViewById(R.id.editText);
+            holder.img1 = (ImageView) convertView.findViewById(R.id.imageViewSpinnerItem);
+            holder.tv1 = (TextView) convertView.findViewById(R.id.textViewSpinnerItem);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        //set the text
-        holder.tv1.setText(values[position]);
-        holder.url = values[position];
+        holder.url = "http://www.tentonsoftware.com/pets/" + "p0.png";
+        holder.tv1.setText("Winston");
 
-        //start a thread to download image
         new DownloadImageTask(holder).execute(holder.url);
-
         return convertView;
+
+//        new DownloadImageTask(holder).execute(holder.url);
+
+//        return convertView;
     }
 }

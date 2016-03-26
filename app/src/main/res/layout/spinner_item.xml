@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-    <resources>
-        <string-array android:name="JSON_URL_NAME">
-            <item>CNU - Defender</item>
-            <item>Pair - Tenton Software - Pets</item>
+    <TextView android:textSize="20.0dip"
+        android:textColor="#ffffffff"
+        android:gravity="left"
+        android:id="@+id/textViewSpinnerItem"
+        android:padding="5.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.0" />
 
-        </string-array>
-        <string-array android:name="JSON_URL">
-            <item>http://www.pcs.cnu.edu/~kperkins/pets/</item>
-            <item>http://www.tentonsoftware.com/pets/</item>
+    <ImageView android:layout_gravity="center_horizontal"
+        android:id="@+id/imageViewSpinnerItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0" />
 
-        </string-array>
-    </resources>
+
 
 </LinearLayout>

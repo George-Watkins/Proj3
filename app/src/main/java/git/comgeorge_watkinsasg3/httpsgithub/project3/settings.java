@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -26,14 +29,15 @@ public class settings extends Activity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        TextView tvButton = (TextView) findViewById(R.id.editText);
+        TextView tv = (TextView) findViewById(R.id.editText);
 
-        tvButton.setOnClickListener(new View.OnClickListener() {
+        tv.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 chooseServer();
             }
         });
+
     }
 
     private void chooseServer() {
@@ -63,6 +67,4 @@ public class settings extends Activity {
         levelDialog = builder.create();
         levelDialog.show();
     }
-
-
 }
